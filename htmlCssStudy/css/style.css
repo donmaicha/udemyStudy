@@ -4,6 +4,16 @@ h1 {
     font-size: 24px; 
     margin: 0;
 }
-p {
+/* p {
     font-size: 14px;
+} */
+
+.content {
+    background-color: #ffffff;
+    width: 600px;
+    margin: 10px auto;
+    border: 1px solid #d1d1d1;
+    padding: 30px;
 }
+
+/* rgba(R, G, B, opacity) */
