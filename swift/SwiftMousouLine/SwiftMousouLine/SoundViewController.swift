@@ -17,6 +17,8 @@ class SoundViewController: UIViewController {
     
     var audioPlayer : AVAudioPlayer!
     
+    var count = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,8 +26,25 @@ class SoundViewController: UIViewController {
         imageView2.isHidden = true
         timeLabel.isHidden = true
         
-        // 音声を再生する
-        if let url = Bundle.main.url(forResource: "baby", withExtension: "mp3") {
+        playMp3(target: "callMusic")
+    }
+    
+    @IBAction func takePhone(_ sender: Any) {
+        imageView2.isHidden = false
+        timeLabel.isHidden  = false
+        
+        // タイマースタート
+        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCountUp), userInfo: nil, repeats: true)
+        
+        playMp3(target:"baby")
+        
+    }
+    
+    /// MP３ファイルの再生処理
+    /// - parameter target: 再生したいファイル名
+    func playMp3(target:String) {
+        // mp3を再生する
+        if let url = Bundle.main.url(forResource: target, withExtension: "mp3") {
             do {
                 audioPlayer = try AVAudioPlayer(contentsOf: url)
                 audioPlayer.play()
@@ -37,15 +56,15 @@ class SoundViewController: UIViewController {
         }
     }
     
-    @IBAction func takePhone(_ sender: Any) {
-        imageView2.isHidden = false
-        // タイマースタート
-        // mp3を再生する
-        
+    @objc func timerCountUp() {
+        count += 1
+        timeLabel.text = String(count)
     }
     
     @IBAction func closePhone(_ sender: Any) {
         // 電話を切る
+        
+        audioPlayer?.stop()
         
         // モーダルウインドウを閉じる
         dismiss(animated: true, completion: nil)
